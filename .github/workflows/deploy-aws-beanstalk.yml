@@ -33,7 +33,7 @@ env:
   ENV: ${{ github.event.inputs.setEnvironment }} 
   APP_NAME: ${{ github.event.inputs.appName }}
   ENVIRONMENT_NAME: ${{ github.event.inputs.appName }}-${{ github.event.inputs.setEnvironment }}
-  VERSION_LABEL: ${{ github.event.inputs.appName }}-${{ github.event.inputs.setEnvironment }}-${{ github.sha }}-teste
+  VERSION_LABEL: ${{ github.event.inputs.appName }}-${{ github.event.inputs.setEnvironment }}-${{ github.sha }}-${{github.run_number}}
 
 jobs:
   deploy:
