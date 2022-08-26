@@ -32,8 +32,8 @@ env:
   AWS_REGION: ${{ github.event.inputs.setRegion }}                                                      # set this to your preferred AWS region, e.g. us-west-1
   ENV: ${{ github.event.inputs.setEnvironment }} 
   APP_NAME: ${{ github.event.inputs.appName }}
-  ENVIRONMENT_NAME: $APP_NAME-$ENV
-  VERSION_LABEL: $APP_NAME-$ENV-${{ github.sha }}
+  ENVIRONMENT_NAME: ${{ github.event.inputs.appName }}-${{ github.event.inputs.setEnvironment }}
+  VERSION_LABEL: ${{ github.event.inputs.appName }}-${{ github.event.inputs.setEnvironment }}-${{ github.sha }}
 
 jobs:
   deploy:
