@@ -13,7 +13,7 @@ on:
         required: true
         default: 'us-east-1' 
         type: choice
-        options:
+        options:ª
         - us-east-1
         - us-east-2
       setEnvironment:
@@ -45,24 +45,24 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-      - name: Configure AWS credentials
+    - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
 
-      - name: Build
-        run: |
-          cd ./app
-          zip -r app.zip .
+    - name: Build
+      run: |
+        cd ./app
+        zip -r app.zip .
 
-      - name: Deploy Amazon Beanstalk
-        run: |
-          aws s3 cp ./app/app.zip s3://$ENVIRONMENT_NAME-bucket/$ENV/$VERSION_LABEL
-          aws --region $AWS_REGION elasticbeanstalk create-application-version --application-name $APP_NAME --version-label $VERSION_LABEL --source-bundle S3Bucket=$ENVIRONMENT_NAME-bucket,S3Key=$ENV/$VERSION_LABEL
-          aws --region $AWS_REGION elasticbeanstalk update-environment --environment-name $ENVIRONMENT_NAME --version-label $VERSION_LABEL
+    - name: Deploy Amazon Beanstalk
+      run: |
+        aws s3 cp ./app/app.zip s3://$ENVIRONMENT_NAME-bucket/$ENV/$VERSION_LABEL
+        aws --region $AWS_REGION elasticbeanstalk create-application-version --application-name $APP_NAME --version-label $VERSION_LABEL --source-bundle S3Bucket=$ENVIRONMENT_NAME-bucket,S3Key=$ENV/$VERSION_LABEL
+        aws --region $AWS_REGION elasticbeanstalk update-environment --environment-name $ENVIRONMENT_NAME --version-label $VERSION_LABEL
 
-      - name: Check Environment
-        run: |
-          aws elasticbeanstalk describe-environments --region $AWS_REGION --application-name $APP_NAME --environment-names $ENVIRONMENT_NAME
+    - name: Check Environment
+      run: |
+        aws elasticbeanstalk describe-environments --region $AWS_REGION --application-name $APP_NAME --environment-names $ENVIRONMENT_NAME
