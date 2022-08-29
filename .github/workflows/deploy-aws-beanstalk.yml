@@ -54,8 +54,7 @@ jobs:
 
     - name: Build
       run: |
-        cd ./app
-        zip -r app.zip .
+        ./scripts/build-app.sh
 
     - name: Deploy Amazon Beanstalk
       run: |
